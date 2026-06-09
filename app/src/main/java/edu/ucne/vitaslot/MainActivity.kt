@@ -32,7 +32,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -77,67 +76,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    @Composable
-    fun MedicoListScreen(medicoList: List<MedicoEntity>) {
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Spacer(modifier = Modifier.height(32.dp))
-            Text("Lista de Medicos")
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                items(medicoList) {
-                    MedicoRow(it)
-                }
-            }
-        }
-    }
-
-    @Composable
-    private fun MedicoRow(it: MedicoEntity) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(modifier = Modifier.weight(1f), text = it.medicoId.toString())
-            Text(
-                modifier = Modifier.weight(2f),
-                text = it.nombre,
-                style = MaterialTheme.typography.headlineLarge
-            )
-            Text(
-                modifier = Modifier.weight(2f),
-                text = it.apellido,
-                style = MaterialTheme.typography.headlineLarge
-            )
-            Text(
-                modifier = Modifier.weight(2f),
-                text = it.direccion,
-                style = MaterialTheme.typography.headlineLarge
-            )
-            Text(modifier = Modifier.weight(1f),
-                text = it.telefono.toString(),
-                style = MaterialTheme.typography.headlineLarge
-            )
-            Text(
-                modifier = Modifier.weight(2f),
-                text = it.correo,
-                style = MaterialTheme.typography.headlineLarge
-            )
-            Text(
-                modifier = Modifier.weight(2f),
-                text = it.fechaNacimiento,
-                style = MaterialTheme.typography.headlineLarge
-            )
-            Text(
-                modifier = Modifier.weight(2f),
-                text = it.especialidad,
-                style = MaterialTheme.typography.headlineLarge
-            )
-        }
-        HorizontalDivider()
     }
 
     @Entity(tableName = "Medicos")
@@ -341,6 +279,68 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    @Composable
+    fun MedicoListScreen(medicoList: List<MedicoEntity>) {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Spacer(modifier = Modifier.height(32.dp))
+            Text("Lista de Medicos")
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(medicoList) {
+                    MedicoRow(it)
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun MedicoRow(it: MedicoEntity) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(modifier = Modifier.weight(1f), text = it.medicoId.toString())
+            Text(
+                modifier = Modifier.weight(2f),
+                text = it.nombre,
+                style = MaterialTheme.typography.headlineLarge
+            )
+            Text(
+                modifier = Modifier.weight(2f),
+                text = it.apellido,
+                style = MaterialTheme.typography.headlineLarge
+            )
+            Text(
+                modifier = Modifier.weight(2f),
+                text = it.direccion,
+                style = MaterialTheme.typography.headlineLarge
+            )
+            Text(modifier = Modifier.weight(1f),
+                text = it.telefono.toString(),
+                style = MaterialTheme.typography.headlineLarge
+            )
+            Text(
+                modifier = Modifier.weight(2f),
+                text = it.correo,
+                style = MaterialTheme.typography.headlineLarge
+            )
+            Text(
+                modifier = Modifier.weight(2f),
+                text = it.fechaNacimiento,
+                style = MaterialTheme.typography.headlineLarge
+            )
+            Text(
+                modifier = Modifier.weight(2f),
+                text = it.especialidad,
+                style = MaterialTheme.typography.headlineLarge
+            )
+        }
+        HorizontalDivider()
+    }
+
     private suspend fun saveMedico(medico: MedicoEntity) {
         medicoDb.medicoDao().save(medico)
     }
