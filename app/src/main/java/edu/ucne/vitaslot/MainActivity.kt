@@ -36,10 +36,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.room.Dao
+import androidx.room.Database
+import androidx.room.Delete
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.Query
 import androidx.room.Room
-import edu.ucne.vitaslot.data.local.database.MedicoDb
-import edu.ucne.vitaslot.data.local.entities.MedicoEntity
+import androidx.room.RoomDatabase
+import androidx.room.Upsert
 import edu.ucne.vitaslot.ui.theme.VitaSlotTheme
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -69,6 +76,52 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    @Entity(tableName = "Medicos")
+    data class MedicoEntity(
+        @PrimaryKey
+        val medicoId: Int? = null,
+        val nombre: String = "",
+        val apellido: String = "",
+        val direccion: String = "",
+        val telefono: Int = 0,
+        val correo: String = "",
+        val fechaNacimiento: String = "",
+        val especialidad: String = "",
+    )
+
+    @Dao
+    interface MedicoDao {
+        @Upsert()
+        suspend fun save(medico: MedicoEntity)
+
+        @Query(
+            """
+        SELECT * 
+        FROM Medicos 
+        WHERE medicoId=:id  
+        LIMIT 1
+        """
+        )
+        suspend fun find(id: Int): MedicoEntity?
+
+        @Delete
+        suspend fun delete(ocupacion: MedicoEntity)
+
+        @Query("SELECT * FROM Medicos")
+        fun getAll(): Flow<List<MedicoEntity>>
+    }
+
+    @Database(
+        entities = [
+            MedicoEntity::class
+        ],
+        version = 1,
+        exportSchema = false
+    )
+    abstract class MedicoDb : RoomDatabase() {
+        abstract fun medicoDao(): MedicoDao
     }
 
     @Composable
