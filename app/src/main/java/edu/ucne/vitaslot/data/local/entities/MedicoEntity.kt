@@ -10,7 +10,7 @@ data class MedicoEntity(
     val nombre: String = "",
     val apellido: String = "",
     val direccion: String = "",
-    val telefono: Int = 0,
+    val telefono: String = "",
     val correo: String = "",
     val fechaNacimiento: String = "",
     val especialidad: String = "",
