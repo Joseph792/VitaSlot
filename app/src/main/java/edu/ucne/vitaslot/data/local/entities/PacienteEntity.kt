@@ -3,15 +3,13 @@ package edu.ucne.vitaslot.data.local.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Medicos")
-data class MedicoEntity(
+@Entity(tableName = "Pacientes")
+data class PacienteEntity(
     @PrimaryKey
-    val medicoId: Int? = null,
+    val pacienteId: Int? = null,
     val nombre: String = "",
     val apellido: String = "",
     val direccion: String = "",
     val telefono: String = "",
-    val correo: String = "",
-    val fechaNacimiento: String = "",
-    val especialidad: String = ""
+    val correo: String = ""
 )

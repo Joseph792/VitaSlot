@@ -81,9 +81,9 @@ fun HomeScreen(
                     )
                 }
 
-                /*// Botón 2 - Prioridades
+                // Botón 2 - Pacientes
                 OutlinedButton(
-                    onClick = { navController.navigate(Screen.PrioridadList) },
+                    onClick = { navController.navigate(Screen.PacienteList) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp)
@@ -99,15 +99,15 @@ fun HomeScreen(
                     )
                 ) {
                     Text(
-                        text = "Registro de Prioridades",
+                        text = "Registro de Pacientes",
                         fontSize = 18.sp,
                         color = Color.Black
                     )
                 }
 
-                // Botón 3 - Tickets
+                // Botón 3 - Consultas
                 OutlinedButton(
-                    onClick = { navController.navigate(Screen.TicketList) },
+                    onClick = { navController.navigate(Screen.ConsultaList) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp)
@@ -123,11 +123,11 @@ fun HomeScreen(
                     )
                 ) {
                     Text(
-                        text = "Registro de Tickets",
+                        text = "Registro de Consultas",
                         fontSize = 18.sp,
                         color = Color.Black
                     )
-                }*/
+                }
             }
         }
     }

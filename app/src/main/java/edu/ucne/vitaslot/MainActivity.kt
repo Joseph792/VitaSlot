@@ -12,17 +12,26 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import edu.ucne.vitaslot.data.local.database.MedicoDb
+import edu.ucne.vitaslot.data.repository.ConsultasRepository
 import edu.ucne.vitaslot.data.repository.MedicosRepository
+import edu.ucne.vitaslot.data.repository.PacientesRepository
+import edu.ucne.vitaslot.presentation.consulta.ConsultasViewModel
 import edu.ucne.vitaslot.presentation.medico.MedicosViewModel
 import edu.ucne.vitaslot.presentation.navigation.HomeNavHost
+import edu.ucne.vitaslot.presentation.paciente.PacientesViewModel
 import edu.ucne.vitaslot.ui.theme.VitaSlotTheme
 
 class MainActivity : ComponentActivity() {
     private lateinit var medicoDb: MedicoDb
 
     private lateinit var medicosRepository: MedicosRepository
-
     private lateinit var medicoviewModel: MedicosViewModel
+    private lateinit var pacientesRepository: PacientesRepository
+    private lateinit var pacientesViewModel: PacientesViewModel
+    private lateinit var consultasRepository: ConsultasRepository
+    private lateinit var consultasViewModel: ConsultasViewModel
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +44,20 @@ class MainActivity : ComponentActivity() {
         ).fallbackToDestructiveMigration()
             .build()
 
-        medicosRepository = MedicosRepository(medicoDb.medicoDao())
+        medicosRepository = MedicosRepository(medicoDb.MedicoDao())
         medicoviewModel = MedicosViewModel(medicosRepository)
+
+        pacientesRepository = PacientesRepository(medicoDb.PacienteDao())
+        pacientesViewModel = PacientesViewModel(pacientesRepository)
+
+        consultasRepository = ConsultasRepository(medicoDb.ConsultaDao())
+        consultasViewModel = ConsultasViewModel(
+            consultasRepository,
+            medicosRepository,
+            pacientesRepository
+        )
+
+
 
         setContent {
             VitaSlotTheme() {
@@ -47,7 +68,9 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(paddingValues)) {
                         HomeNavHost(
                             navHostController = nav,
-                            medicosViewModel = medicoviewModel
+                            medicosViewModel = medicoviewModel,
+                            pacientesViewModel = pacientesViewModel,
+                            consultasViewModel = consultasViewModel
                         )
                     }
                 }
