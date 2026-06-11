@@ -8,14 +8,22 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import edu.ucne.vitaslot.presentation.Home.HomeScreen
+import edu.ucne.vitaslot.presentation.consulta.ConsultaListScreen
+import edu.ucne.vitaslot.presentation.consulta.ConsultaScreen
+import edu.ucne.vitaslot.presentation.consulta.ConsultasViewModel
 import edu.ucne.vitaslot.presentation.medico.MedicoListScreen
 import edu.ucne.vitaslot.presentation.medico.MedicoScreen
 import edu.ucne.vitaslot.presentation.medico.MedicosViewModel
+import edu.ucne.vitaslot.presentation.paciente.PacienteListScreen
+import edu.ucne.vitaslot.presentation.paciente.PacienteScreen
+import edu.ucne.vitaslot.presentation.paciente.PacientesViewModel
 
 @Composable
 fun HomeNavHost(
     navHostController: NavHostController,
-    medicosViewModel: MedicosViewModel
+    medicosViewModel: MedicosViewModel,
+    pacientesViewModel: PacientesViewModel,
+    consultasViewModel: ConsultasViewModel
 ){
     NavHost(
         navController = navHostController,
@@ -53,56 +61,56 @@ fun HomeNavHost(
             )
         }
 
-        /*//pantalla lista de tecnicos
-        composable<Screen.TecnicoList>{
-            val tecnicos by tecnicosViewModel.tecnicos.collectAsState()
+        //pantalla lista de pacientes
+        composable<Screen.PacienteList>{
+            val pacientes by pacientesViewModel.pacientes.collectAsState()
 
-            TecnicoListScreen(
-                tecnicoList = tecnicos,
+            PacienteListScreen(
+                pacienteList = pacientes,
                 onEdit = { id ->
-                    navHostController.navigate(Screen.Tecnico(id ?: 0))
+                    navHostController.navigate(Screen.Paciente(id ?: 0))
                 },
-                onDelete = { tecnico ->
-                    tecnicosViewModel.deleteTecnico(tecnico)
+                onDelete = { paciente ->
+                    pacientesViewModel.deletePaciente(paciente)
                 }
             )
         }
 
-        //pantalla formulario de tecnico
-        composable <Screen.Tecnico>{ backStack ->
-            val tecnicoId = backStack.toRoute<Screen.Tecnico>().tecnicoId
-            TecnicoScreen(
-                tecnicoId = tecnicoId,
-                viewModel = tecnicosViewModel,
+        //pantalla formulario de pacientes
+        composable <Screen.Paciente>{ backStack ->
+            val pacienteId = backStack.toRoute<Screen.Paciente>().pacienteId
+            PacienteScreen(
+                pacienteId = pacienteId,
+                viewModel = pacientesViewModel,
                 navController = navHostController,
                 function = {navHostController.popBackStack()}
             )
         }
 
-        //pantalla lista de tickets
-        composable <Screen.TicketList>{
-            val tickets by ticketsViewModel.ticketsS.collectAsState()
+        //pantalla lista de consultas
+        composable <Screen.ConsultaList>{
+            val consultas by consultasViewModel.consultasS.collectAsState()
 
-            TicketListScreen(
-                ticketList = tickets,
+            ConsultaListScreen(
+                consultaList = consultas,
                 onEdit = { id ->
-                    navHostController.navigate(Screen.Ticket(id ?: 0))
+                    navHostController.navigate(Screen.Consulta(id ?: 0))
                 },
-                onDelete = {ticket ->
-                    ticketsViewModel.deleteTicket(ticket)
+                onDelete = {consulta ->
+                    consultasViewModel.deleteConsulta(consulta)
                 }
             )
         }
 
-        //pantalla formulario tickets
-        composable <Screen.Ticket>{ backStack ->
-            val ticketId = backStack.toRoute<Screen.Ticket>().ticketId
-            TicketScreen(
-                ticketId = ticketId,
-                viewModel = ticketsViewModel,
+        //pantalla formulario consultas
+        composable <Screen.Consulta>{ backStack ->
+            val consultaId = backStack.toRoute<Screen.Consulta>().consultaId
+            ConsultaScreen(
+                consultaId = consultaId,
+                viewModel = consultasViewModel,
                 navController = navHostController,
                 function = { navHostController.popBackStack()}
             )
-        }*/
+        }
     }
 }

@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 interface MedicoDao {
     @Upsert()
     suspend fun save(medico: MedicoEntity)
-
     @Query(
         """
         SELECT * 
@@ -21,10 +20,8 @@ interface MedicoDao {
         """
     )
     suspend fun find(id: Int): MedicoEntity?
-
     @Delete
     suspend fun delete(ocupacion: MedicoEntity)
-
     @Query("SELECT * FROM Medicos")
     fun getAll(): Flow<List<MedicoEntity>>
 }
